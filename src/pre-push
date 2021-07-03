@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+LC_ALL=C
+changedFile="$(git diff origin/test --name-only src/version-number.ts)"
+local_branch="$(git rev-parse --abbrev-ref HEAD)"
+
+if [ "$local_branch" == "test" ]; then
+    if [[ "$changedFile" == "" ]];
+    then
+      echo 'You did not change the version before pushing to the test!'
+      exit 1
+    fi
+
+    echo "Good job, you did it!"
+    exit 0
+else
+    echo "You aint in the test!"
+    exit 0
+fi
+
